@@ -329,7 +329,7 @@ void BatteryChecker(void*) {
 			if (!Max17050ReadReg(MAX17050_RCOMP0, &data))
 				continue;
 			res = data;
-
+			I2c_Bq24193_SetFastChargeCurrentLimit(4544);
 			svcSleepThread(500'000'000);
 		}
 		_batteryChargeInfoFields = {0};
