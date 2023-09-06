@@ -69,10 +69,14 @@ char DSP_Load_c[16];
 //Battery
 Service* psmService = 0;
 BatteryChargeInfoFields _batteryChargeInfoFields = {0};
-char Battery_c[320];
+char Battery_c[480];
 char BatteryDraw_c[64];
 float batCurrentAvg = 0;
 float batVoltageAvg = 0;
+float fullcapnom = 0;
+float fullcap=0;
+float qh=0;
+float res=0;
 float PowerConsumption = 0;
 
 //Temperatures
@@ -313,6 +317,19 @@ void BatteryChecker(void*) {
 			batVoltageAvg = batVoltage;
 			batPowerAvg /= ArraySize * 1000;
 			PowerConsumption = batPowerAvg;
+			if (!Max17050ReadReg(MAX17050_FullCAPNom, &data))
+				continue;
+			fullcapnom = data;
+			if (!Max17050ReadReg(MAX17050_FullCAP, &data))
+				continue;
+			fullcap = data;
+			if (!Max17050ReadReg(MAX17050_QH, &data))
+				continue;
+			qh = data;
+			if (!Max17050ReadReg(MAX17050_RCOMP0, &data))
+				continue;
+			res = data;
+
 			svcSleepThread(500'000'000);
 		}
 		_batteryChargeInfoFields = {0};

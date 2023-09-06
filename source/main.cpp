@@ -597,6 +597,11 @@ public:
 				"Battery Voltage (5s AVG): %.0f mV\n"
 				"Battery Current Flow (5s AVG): %+.0f mA\n"
 				"Battery Power Flow (5s AVG): %+.3f W\n"
+				"Battery FullCapNom: %.0f mAh\n"
+				"Battery FullCapRep: %.0f mAh\n"
+				"Battery qh: %.0f mAh\n"
+				"Battery Resistance: %.0f mOhm\n"
+				"ugurkrcl\n"
 				"Charger Type: %u\n"
 				"Charger Max Voltage: %u mV\n"
 				"Charger Max Current: %u mA",
@@ -606,6 +611,10 @@ public:
 				batVoltageAvg,
 				batCurrentAvg,
 				PowerConsumption,
+				fullcapnom/2,
+				fullcap/2,
+				qh/2,
+				res,
 				_batteryChargeInfoFields.ChargerType,
 				_batteryChargeInfoFields.ChargerVoltageLimit,
 				_batteryChargeInfoFields.ChargerCurrentLimit
@@ -617,13 +626,22 @@ public:
 				"Battery Age: %.1f%s\n"
 				"Battery Voltage (5s AVG): %.0f mV\n"
 				"Battery Current Flow (5s AVG): %.0f mA\n"
-				"Battery Power Flow (5s AVG): %+.3f W",
+				"Battery Power Flow (5s AVG): %+.3f W\n"
+				"Battery FullCapNom: %.0f mAh\n"
+				"Battery FullCapRep: %.0f mAh\n"
+				"Battery qh: %.0f mAh\n"
+				"Battery Resistance: %.0f mOhm\n"
+				"ugurkrcl",
 				(float)_batteryChargeInfoFields.BatteryTemperature / 1000,
 				(float)_batteryChargeInfoFields.RawBatteryCharge / 1000, "%",
 				(float)_batteryChargeInfoFields.BatteryAge / 1000, "%",
 				batVoltageAvg,
 				batCurrentAvg,
-				PowerConsumption
+				PowerConsumption,
+				fullcapnom/2,
+				fullcap/2,
+				qh/2,
+				res
 			);
 		
 	}
