@@ -403,8 +403,8 @@ public:
 		snprintf(FPS_compressed_c, sizeof FPS_compressed_c, "%s\n%s", FPS_c, FPSavg_c);
 		snprintf(FPS_var_compressed_c, sizeof FPS_compressed_c, "%u\n%2.2f", FPS, FPSavg);
 
-		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%0.f", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c,batVoltageAvg);
-		else snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%0.f", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c,batVoltageAvg);
+		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%0.f  %.1f%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c,batVoltageAvg,(float)_batteryChargeInfoFields.RawBatteryCharge / 1000,"%");
+		else snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%0.f  %.1f%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c,batVoltageAvg,(float)_batteryChargeInfoFields.RawBatteryCharge / 1000,"%");
 
 	}
 	virtual bool handleInput(uint64_t keysDown, uint64_t keysHeld, touchPosition touchInput, JoystickPosition leftJoyStick, JoystickPosition rightJoyStick) override {
