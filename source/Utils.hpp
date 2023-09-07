@@ -78,9 +78,17 @@ float fullcapnom = 0;
 float remcap=0;
 float fullcap=0;
 float qh=0;
+float qh0=0;
 float res=0;
-
+float qr=0;
+float qr0=0;
+float qr1=0;
+float qr2=0;
+float qr3=0;
+float cycles=0;
+float ocv=0;
 float PowerConsumption = 0;
+float calcres=0;
 
 //Temperatures
 int32_t SOC_temperatureC = 0;
@@ -333,14 +341,43 @@ void BatteryChecker(void*) {
 				continue;
 			fullcap = data;
 
+			if (!Max17050ReadReg(Max17050_QH0, &data))
+				continue;
+			qh0 = (int16_t)data;
 			if (!Max17050ReadReg(MAX17050_QH, &data))
 				continue;
-			qh = data;
-			if (!Max17050ReadReg(MAX17050_RCOMP0, &data))
+			qh = (int16_t)data;
+			if (!Max17050ReadReg(MAX17050_RSLOW, &data))
 				continue;
 			res = data;
+			if (!Max17050ReadReg(0x0C, &data))
+				continue;
+			qr = data;
+			if (!Max17050ReadReg(MAX17050_QRTbl00, &data))
+				continue;
+			qr0 = data;
+			if (!Max17050ReadReg(MAX17050_QRTbl10, &data))
+				continue;
+			qr1 = data;
+			if (!Max17050ReadReg(MAX17050_QRTbl20, &data))
+				continue;
+			qr2 = data;
+			if (!Max17050ReadReg(MAX17050_QRTbl30, &data))
+				continue;
+			qr3 = data;
+			if (!Max17050ReadReg(MAX17050_Cycles, &data))
+				continue;
+			cycles = data;
+			if (!Max17050ReadReg(MAX17050_OCVInternal, &data))
+				continue;
+			ocv= (data >> 3) * 625 / 1000;
+			if(batVoltageAvg>ocv){
+			calcres = (batVoltageAvg - ocv) / batCurrentAvg;
+			}else{
+			calcres = (ocv - batVoltageAvg) / batCurrentAvg;
+			}
 			I2c_Bq24193_SetFastChargeCurrentLimit(3000); //
-			svcSleepThread(500'000'000);
+			svcSleepThread(700'000'000);
 		}
 		_batteryChargeInfoFields = {0};
 	}

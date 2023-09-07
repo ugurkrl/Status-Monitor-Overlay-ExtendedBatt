@@ -591,18 +591,19 @@ public:
 
 		if (_batteryChargeInfoFields.ChargerType)
 			snprintf(Battery_c, sizeof Battery_c,
-				"Battery Temperature: %.1f\u00B0C\n"
-				"Battery Raw Charge: %.1f%s\n"
-				"Battery Age: %.1f%s\n"
-				"Battery Voltage (5s AVG): %.0f mV\n"
-				"Battery Current Flow (5s AVG): %+.0f mA\n"
-				"Battery Power Flow (5s AVG): %+.3f W\n"
-				"Battery RemCap: %.0f mAh\n"
-				"Battery FullCapNom: %.0f mAh\n"
-				"Battery RepCap: %.0f mAh\n"
-				"Battery FullCapRep: %.0f mAh\n"
-				"Battery qh: %.0f mAh\n"
-				"Battery Resistance: %.0f mOhm\n"
+				"Temperature: %.1f\u00B0C\n"
+				"Raw Charge: %.1f%s\n"
+				"Age: %.1f%s\n"
+				"Voltage (5s AVG): %.0f mV | %.0f mV \n"
+				"Current Flow (5s AVG): %+.0f mA\n"
+				"Power Flow (5s AVG): %+.3f W\n"
+				"RemCap: %.0f/%.0f mAh\n"
+				"RepCap: %.0f/%.0f mAh\n"
+				"qh: %.0f mAh | %.0f\n"
+				"Resistance: %.0f mOhm\n"
+				"CalculatedRes: %.2f Ohm\n"
+				"QR: %.0f %.0f %.0f %.0f %.0f\n"
+				"Cycles: %.0f\n"
 				"ugurkrcl\n"
 				"Charger Type: %u\n"
 				"Charger Max Voltage: %u mV\n"
@@ -611,45 +612,53 @@ public:
 				(float)_batteryChargeInfoFields.RawBatteryCharge / 1000, "%",
 				(float)_batteryChargeInfoFields.BatteryAge / 1000, "%",
 				batVoltageAvg,
+				ocv,
 				batCurrentAvg,
 				PowerConsumption,
 				remcap/2,
 				fullcapnom/2,
 				repcap/2,
 				fullcap/2,
-				32768-(qh/2),
-				res,
+				(qh/2),
+				qh0,
+				res,calcres,
+				qr/2,qr0,qr1,qr2,qr3,
+				cycles,
 				_batteryChargeInfoFields.ChargerType,
 				_batteryChargeInfoFields.ChargerVoltageLimit,
 				_batteryChargeInfoFields.ChargerCurrentLimit
 			);
 		else
 			snprintf(Battery_c, sizeof Battery_c,
-				"Battery Temperature: %.1f\u00B0C\n"
-				"Battery Raw Charge: %.1f%s\n"
-				"Battery Age: %.1f%s\n"
-				"Battery Voltage (5s AVG): %.0f mV\n"
-				"Battery Current Flow (5s AVG): %.0f mA\n"
-				"Battery Power Flow (5s AVG): %+.3f W\n"
-				"Battery RemCap: %.0f mAh\n"
-				"Battery FullCapNom: %.0f mAh\n"
-				"Battery RepCap: %.0f mAh\n"
-				"Battery FullCapRep: %.0f mAh\n"
-				"Battery qh: %.0f mAh\n"
-				"Battery Resistance: %.0f mOhm\n"
+				"Temperature: %.1f\u00B0C\n"
+				"Raw Charge: %.1f%s\n"
+				"Age: %.1f%s\n"
+				"Voltage (5s AVG): %.0f mV | %.0f mV \n"
+				"Current Flow (5s AVG): %.0f mA\n"
+				"Power Flow (5s AVG): %+.3f W\n"
+				"RemCap: %.0f/%.0f mAh\n"
+				"RepCap: %.0f/%.0f mAh\n"
+				"qh: %.0f mAh | %.0f\n"
+				"Resistance: %.0f mOhm\n"
+				"CalculatedRes: %.2f Ohm\n"
+				"QR: %.0f %.0f %.0f %.0f %.0f\n"
+				"Cycles: %.0f\n"
 				"ugurkrcl",
 				(float)_batteryChargeInfoFields.BatteryTemperature / 1000,
 				(float)_batteryChargeInfoFields.RawBatteryCharge / 1000, "%",
 				(float)_batteryChargeInfoFields.BatteryAge / 1000, "%",
 				batVoltageAvg,
+				ocv,
 				batCurrentAvg,
 				PowerConsumption,
 				remcap/2,
 				fullcapnom/2,
 				repcap/2,
 				fullcap/2,
-				32768-(qh/2),
-				res
+				(qh/2),
+				qh0,
+				res,calcres,
+				qr/2,qr0,qr1,qr2,qr3,cycles
 			);
 		
 	}
