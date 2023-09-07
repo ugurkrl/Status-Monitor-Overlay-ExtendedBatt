@@ -334,13 +334,13 @@ public:
 
 		auto Status = new tsl::elm::CustomDrawer([](tsl::gfx::Renderer *renderer, u16 x, u16 y, u16 w, u16 h) {
 			
-			if (!GameRunning) renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 95, a(0x7111));
-			else renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 125, a(0x7111));
+			if (!GameRunning) renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 110, a(0x7111));
+			else renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 140, a(0x7111));
 			
 			//Print strings
 			///CPU
-			if (GameRunning) renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nPFPS\nFPS", false, 0, 15, 15, renderer->a(0xFFFF));
-			else renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW", false, 0, 15, 15, renderer->a(0xFFFF));
+			if (GameRunning) renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nPFPS\nFPS\nVOLT", false, 0, 15, 15, renderer->a(0xFFFF));
+			else renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nVOLT", false, 0, 15, 15, renderer->a(0xFFFF));
 			
 			///GPU
 			renderer->drawString(Variables, false, 60, 15, 15, renderer->a(0xFFFF));
@@ -403,8 +403,8 @@ public:
 		snprintf(FPS_compressed_c, sizeof FPS_compressed_c, "%s\n%s", FPS_c, FPSavg_c);
 		snprintf(FPS_var_compressed_c, sizeof FPS_compressed_c, "%u\n%2.2f", FPS, FPSavg);
 
-		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c);
-		else snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c);
+		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%0.f", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c,batVoltageAvg);
+		else snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%0.f", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c,batVoltageAvg);
 
 	}
 	virtual bool handleInput(uint64_t keysDown, uint64_t keysHeld, touchPosition touchInput, JoystickPosition leftJoyStick, JoystickPosition rightJoyStick) override {
@@ -597,7 +597,9 @@ public:
 				"Battery Voltage (5s AVG): %.0f mV\n"
 				"Battery Current Flow (5s AVG): %+.0f mA\n"
 				"Battery Power Flow (5s AVG): %+.3f W\n"
+				"Battery RemCap: %.0f mAh\n"
 				"Battery FullCapNom: %.0f mAh\n"
+				"Battery RepCap: %.0f mAh\n"
 				"Battery FullCapRep: %.0f mAh\n"
 				"Battery qh: %.0f mAh\n"
 				"Battery Resistance: %.0f mOhm\n"
@@ -611,9 +613,11 @@ public:
 				batVoltageAvg,
 				batCurrentAvg,
 				PowerConsumption,
+				remcap/2,
 				fullcapnom/2,
+				repcap/2,
 				fullcap/2,
-				qh/2,
+				32768-(qh/2),
 				res,
 				_batteryChargeInfoFields.ChargerType,
 				_batteryChargeInfoFields.ChargerVoltageLimit,
@@ -627,7 +631,9 @@ public:
 				"Battery Voltage (5s AVG): %.0f mV\n"
 				"Battery Current Flow (5s AVG): %.0f mA\n"
 				"Battery Power Flow (5s AVG): %+.3f W\n"
+				"Battery RemCap: %.0f mAh\n"
 				"Battery FullCapNom: %.0f mAh\n"
+				"Battery RepCap: %.0f mAh\n"
 				"Battery FullCapRep: %.0f mAh\n"
 				"Battery qh: %.0f mAh\n"
 				"Battery Resistance: %.0f mOhm\n"
@@ -638,9 +644,11 @@ public:
 				batVoltageAvg,
 				batCurrentAvg,
 				PowerConsumption,
+				remcap/2,
 				fullcapnom/2,
+				repcap/2,
 				fullcap/2,
-				qh/2,
+				32768-(qh/2),
 				res
 			);
 		
