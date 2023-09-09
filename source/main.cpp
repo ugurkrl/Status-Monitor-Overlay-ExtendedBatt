@@ -400,7 +400,7 @@ public:
 		///FPS
 		snprintf(FPSavg_c, sizeof FPSavg_c, "FPS:"); //Frames Per Second calculated from averaged frametime 
 		snprintf(FPS_compressed_c, sizeof FPS_compressed_c, "%s", FPSavg_c);
-		snprintf(FPS_var_compressed_c, sizeof FPS_compressed_c, "%u\n%2.2f", FPS, FPSavg);
+		snprintf(FPS_var_compressed_c, sizeof FPS_compressed_c, "%2.2f", FPS, FPSavg);
 
 		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%0.f  %.1f%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c,batVoltageAvg,(float)_batteryChargeInfoFields.RawBatteryCharge / 1000,"%");
 		else snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%0.f  %.1f%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c,batVoltageAvg,(float)_batteryChargeInfoFields.RawBatteryCharge / 1000,"%");
@@ -601,7 +601,6 @@ public:
 				"qh: %.0f  | %.0f mAh\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
-				"Cycles: %.0f\n"
 				"ugurkrcl\n"
 				"Charger Type: %u\n"
 				"Charger Max Voltage: %u mV\n"
@@ -621,7 +620,6 @@ public:
 				qh0/2,
 				calcres,
 				qr/2,qr0,qr1,qr2,qr3,
-				cycles,
 				_batteryChargeInfoFields.ChargerType,
 				_batteryChargeInfoFields.ChargerVoltageLimit,
 				_batteryChargeInfoFields.ChargerCurrentLimit
@@ -639,7 +637,6 @@ public:
 				"qh: %.0f  | %.0f mAh\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
-				"Cycles: %.0f\n"
 				"ugurkrcl",
 				(float)_batteryChargeInfoFields.BatteryTemperature / 1000,
 				(float)_batteryChargeInfoFields.RawBatteryCharge / 1000, "%",
@@ -655,7 +652,7 @@ public:
 				(qh/2),
 				qh0/2,
 				calcres,
-				qr/2,qr0,qr1,qr2,qr3,cycles
+				qr/2,qr0,qr1,qr2,qr3
 			);
 		
 	}
