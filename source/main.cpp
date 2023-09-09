@@ -599,7 +599,7 @@ public:
 				"Power Flow (5s AVG): %+.3f W\n"
 				"RemCap: %.0f/%.0f mAh\n"
 				"RepCap: %.0f/%.0f mAh\n"
-				"qh: %.0f mAh | %.0f\n"
+				"qh: %.0f  | %.0f mAh\n"
 				"Resistance: %.0f mOhm\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
@@ -620,7 +620,7 @@ public:
 				repcap/2,
 				fullcap/2,
 				(qh/2),
-				qh0,
+				qh0/2,
 				res,calcres,
 				qr/2,qr0,qr1,qr2,qr3,
 				cycles,
@@ -638,7 +638,7 @@ public:
 				"Power Flow (5s AVG): %+.3f W\n"
 				"RemCap: %.0f/%.0f mAh\n"
 				"RepCap: %.0f/%.0f mAh\n"
-				"qh: %.0f mAh | %.0f\n"
+				"qh: %.0f  | %.0f mAh\n"
 				"Resistance: %.0f mOhm\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
@@ -656,7 +656,7 @@ public:
 				repcap/2,
 				fullcap/2,
 				(qh/2),
-				qh0,
+				qh0/2,
 				res,calcres,
 				qr/2,qr0,qr1,qr2,qr3,cycles
 			);

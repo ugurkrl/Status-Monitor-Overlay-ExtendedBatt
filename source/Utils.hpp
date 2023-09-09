@@ -371,12 +371,10 @@ void BatteryChecker(void*) {
 			if (!Max17050ReadReg(MAX17050_OCVInternal, &data))
 				continue;
 			ocv= (data >> 3) * 625 / 1000;
-			if(batVoltageAvg>ocv){
 			calcres = (batVoltageAvg - ocv) / batCurrentAvg;
-			}else{
-			calcres = (ocv - batVoltageAvg) / batCurrentAvg;
+			if(calcres<0){
+				1-calcres;
 			}
-			I2c_Bq24193_SetFastChargeCurrentLimit(3000); //
 			svcSleepThread(700'000'000);
 		}
 		_batteryChargeInfoFields = {0};
