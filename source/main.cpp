@@ -335,11 +335,11 @@ public:
 		auto Status = new tsl::elm::CustomDrawer([](tsl::gfx::Renderer *renderer, u16 x, u16 y, u16 w, u16 h) {
 			
 			if (!GameRunning) renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 110, a(0x7111));
-			else renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 140, a(0x7111));
+			else renderer->drawRect(0, 0, tsl::cfg::FramebufferWidth - 150, 125, a(0x7111));
 			
 			//Print strings
 			///CPU
-			if (GameRunning) renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nPFPS\nFPS\nVOLT", false, 0, 15, 15, renderer->a(0xFFFF));
+			if (GameRunning) renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nFPS\nVOLT", false, 0, 15, 15, renderer->a(0xFFFF));
 			else renderer->drawString("CPU\nGPU\nRAM\nTEMP\nFAN\nDRAW\nVOLT", false, 0, 15, 15, renderer->a(0xFFFF));
 			
 			///GPU
@@ -390,7 +390,7 @@ public:
 		snprintf(RAM_var_compressed_c, sizeof RAM_var_compressed_c, "%s@%.1f", RAM_all_c, (float)RAM_Hz / 1000000);
 		
 		///Thermal
-		snprintf(SoCPCB_temperature_c, sizeof SoCPCB_temperature_c, "%0.2fW", PowerConsumption);
+		snprintf(SoCPCB_temperature_c, sizeof SoCPCB_temperature_c, "%0.2fW %+.0fmA", PowerConsumption, batCurrentAvg);
 		if (hosversionAtLeast(14,0,0))
 			snprintf(skin_temperature_c, sizeof skin_temperature_c, "%2d\u00B0C/%2d\u00B0C/%2.1f\u00B0C", SOC_temperatureC, PCB_temperatureC, (float)skin_temperaturemiliC / 1000);
 		else
@@ -398,9 +398,8 @@ public:
 		snprintf(Rotation_SpeedLevel_c, sizeof Rotation_SpeedLevel_c, "%2.2f%s", Rotation_SpeedLevel_f * 100, "%");
 		
 		///FPS
-		snprintf(FPS_c, sizeof FPS_c, "PFPS:"); //Pushed Frames Per Second
 		snprintf(FPSavg_c, sizeof FPSavg_c, "FPS:"); //Frames Per Second calculated from averaged frametime 
-		snprintf(FPS_compressed_c, sizeof FPS_compressed_c, "%s\n%s", FPS_c, FPSavg_c);
+		snprintf(FPS_compressed_c, sizeof FPS_compressed_c, "%s", FPSavg_c);
 		snprintf(FPS_var_compressed_c, sizeof FPS_compressed_c, "%u\n%2.2f", FPS, FPSavg);
 
 		if (GameRunning) snprintf(Variables, sizeof Variables, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%0.f  %.1f%s", CPU_compressed_c, GPU_Load_c, RAM_var_compressed_c, skin_temperature_c, Rotation_SpeedLevel_c, SoCPCB_temperature_c, FPS_var_compressed_c,batVoltageAvg,(float)_batteryChargeInfoFields.RawBatteryCharge / 1000,"%");
@@ -600,7 +599,6 @@ public:
 				"RemCap: %.0f/%.0f mAh\n"
 				"RepCap: %.0f/%.0f mAh\n"
 				"qh: %.0f  | %.0f mAh\n"
-				"Resistance: %.0f mOhm\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
 				"Cycles: %.0f\n"
@@ -621,7 +619,7 @@ public:
 				fullcap/2,
 				(qh/2),
 				qh0/2,
-				res,calcres,
+				calcres,
 				qr/2,qr0,qr1,qr2,qr3,
 				cycles,
 				_batteryChargeInfoFields.ChargerType,
@@ -639,7 +637,6 @@ public:
 				"RemCap: %.0f/%.0f mAh\n"
 				"RepCap: %.0f/%.0f mAh\n"
 				"qh: %.0f  | %.0f mAh\n"
-				"Resistance: %.0f mOhm\n"
 				"CalculatedRes: %.2f Ohm\n"
 				"QR: %.0f %.0f %.0f %.0f %.0f\n"
 				"Cycles: %.0f\n"
@@ -657,7 +654,7 @@ public:
 				fullcap/2,
 				(qh/2),
 				qh0/2,
-				res,calcres,
+				calcres,
 				qr/2,qr0,qr1,qr2,qr3,cycles
 			);
 		

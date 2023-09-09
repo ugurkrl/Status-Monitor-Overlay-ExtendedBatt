@@ -347,7 +347,7 @@ void BatteryChecker(void*) {
 			if (!Max17050ReadReg(MAX17050_QH, &data))
 				continue;
 			qh = (int16_t)data;
-			if (!Max17050ReadReg(MAX17050_RSLOW, &data))
+			if (!Max17050ReadReg(MAX17050_RCOMP0, &data))
 				continue;
 			res = data;
 			if (!Max17050ReadReg(0x0C, &data))
